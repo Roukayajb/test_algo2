@@ -1,0 +1,76 @@
+//la 1 solution avec array
+ALGORITHM sum_distinct
+
+var setone,settwo,setthree : ARRAY_OF INTEGER[];
+var sum:=0;
+var count:=1;
+var n :integer;
+
+Begin
+
+setone:={3,1,7,9};
+settwo:={2,4,1,9,3};
+setone:=setone.concat(settwo);
+n:=setone.length;
+setone.sort();
+For i FROM 0 TO n-1 DO
+let val:=setone[i];
+ FOR j FROM i+1 TO n DO
+  IF(setone[i]=val)THEN
+    count:=count++; 
+  END_IF
+ END_FOR
+ IF(count=1) THEN
+  setthree.push(val);
+  ELSE
+  count:=1;
+  END_IF
+END_For
+For k FROM 0 TO setthree.length-1 DO
+sum += setthree[k];
+END_FOR
+write ("THE SUM OF DISTINCT ELEMENTS IS "+sum);
+
+end
+
+****
+//la 2 solution avec hashtable
+
+ALGORITHM sum_distinct
+
+let setthree : Hashtable<integer, integer> ;
+let sum:=0;
+let element,count :integer;
+let setone,settwo: ARRAY_OF INTEGER[];
+let itr : Iterator;
+
+Begin
+
+setone:={3,1,7,9};
+settwo:={2,4,1,9,3};
+setone:=setone.concat(settwo);
+setthree := new Hashtable(); 
+
+For i FROM 0 TO setone.length-1 DO
+ element:= setone[i];
+ IF (setthree.hasOwnProperty(element)) THEN
+    count:=setthree.get(element);
+    setthree.put(element,count+1);
+  ELSE
+    setthree.put(element,1);
+ END_IF
+END_FoR
+
+let n:=setthree.values();
+let keys := setthree.keys()
+ itr := keys.iterator();
+ while(itr.hasNext()) DO
+ 
+  let  integer key :=itr.next();
+    IF(n[key]===1) THEN 
+     sum+= key; 
+    END_IF
+ END_WHILE    
+ write("THE SUM IS:" + sum);
+
+end
